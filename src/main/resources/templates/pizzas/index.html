@@ -6,9 +6,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link th:replace="fragments :: bootstrapcss">
+    <link th:replace="fragments :: customcss">
 </head>
 <body>
-<table>
+<table th:if="${list.size() > 0}">
     <thead>
     <tr>
         <th>Name</th>
@@ -25,5 +27,6 @@
     </tr>
     </tbody>
 </table>
+<h1 th:if="${list.size() == 0}">NO RECORDS HERE</h1>
 </body>
 </html>
