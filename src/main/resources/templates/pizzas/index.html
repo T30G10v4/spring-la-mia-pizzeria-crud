@@ -6,17 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link th:replace="~{fragments :: bootstrapcss}">
-    <link th:replace="~{fragments :: customcss}">
-    <link th:replace="~{fragments :: fontawesome}">
+    <link th:replace="~{/fragments/fragments :: head}">
 </head>
 <body>
-<table th:if="${list.size() > 0}">
+    <nav th:replace="~{/fragments/fragments :: navbar('pizzas', true)}"></nav>
+<table th:if="${list.size() > 0}" class="table table-striped table-dark">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Actions</th>
 
     </tr>
     </thead>
@@ -25,10 +25,11 @@
         <td th:text="*{name}"></td>
         <td th:text="*{description}"></td>
         <td th:text="*{price}"></td>
+        <td><a class="btn btn-primary" th:href="@{|/pizzas/*{id}|}"><i class="fa-solid fa-eye"></i></a></td>
     </tr>
     </tbody>
 </table>
+
 <h1 th:if="${list.size() == 0}">NO RECORDS HERE</h1>
-<i class="fa-solid fa-pizza-slice"></i>
 </body>
 </html>

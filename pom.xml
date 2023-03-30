@@ -52,12 +52,13 @@
 			<artifactId>bootstrap</artifactId>
 			<version>5.2.3</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.webjars.bower/fontawesome -->
+		<!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
 		<dependency>
-			<groupId>org.webjars.bower</groupId>
-			<artifactId>fontawesome</artifactId>
-			<version>4.7.0</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>6.3.0</version>
 		</dependency>
+
 
 	</dependencies>
 
