@@ -14,8 +14,6 @@
 
     </th:block>
 
-
-
 </head>
 <body>
     <th:block th:fragment="navbar(current, showSearch)">
@@ -33,7 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#" th:classAppend="${current == 'users'} ? active : not-active">Link</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/pizzas/create}" th:classAppend="${current == 'create'} ? active : not-active">Create</a>
+                        </li>
                     </ul>
                     <form
                             th:if="${showSearch}"
