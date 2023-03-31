@@ -1,6 +1,7 @@
 package me.matteogiovagnotti.springlamiapizzeria.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -12,9 +13,12 @@ public class Pizza {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotBlank
     private String name;
+    @NotBlank
     private String description;
+    @NotNull
+    @DecimalMin("0.01")
     private BigDecimal price;
 
     public Integer getId() {

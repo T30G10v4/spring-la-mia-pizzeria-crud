@@ -10,8 +10,13 @@
 </head>
     <body>
         <nav th:replace="~{/fragments/fragments :: navbar('create', false)}"></nav>
+        <div class="container">
         <h1>Create new pizza</h1>
-        <form id="pizza-form" th:action="@{/pizzas/create}" method="post" th:object="pizza" class="row gy-3">
+        <form id="pizza-form" th:action="@{/pizzas/create}" method="post" th:object="${pizza}" class="row gy-3">
+
+            <ul>
+                <li th:each="err : ${#fields.globalErrors() }" th:text="${err}"></li>
+            </ul>
 
             <div class="col-12">
                 <label class="form-label" for="name">Name*</label>
@@ -26,12 +31,17 @@
 
             <div class="col-12">
                 <label class="form-label" for="description">Description*</label>
-                <textarea id="description" class="form-control" th:field="*{description}" rows="5"></textarea>
+                <textarea id="description" class="form-control" th:field="*{description}" rows="5" th:errorClass="is-invalid"></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="col-12">
                 <label class="form-label" for="price">Price*</label>
-                <input type="text" id="price" class="form-control" th:field="*{price}"
+                <input type="number" id="price" class="form-control" th:field="*{price}"
                        th:errorClass="is-invalid">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
                     <ul>
@@ -46,5 +56,6 @@
             </div>
 
         </form>
+        </div>
     </body>
 </html>
