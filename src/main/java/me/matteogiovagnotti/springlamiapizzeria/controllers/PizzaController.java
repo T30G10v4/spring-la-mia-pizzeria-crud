@@ -2,6 +2,9 @@ package me.matteogiovagnotti.springlamiapizzeria.controllers;
 
 
 import jakarta.validation.Valid;
+import me.matteogiovagnotti.springlamiapizzeria.exceptions.PizzaNotFoundException;
+import me.matteogiovagnotti.springlamiapizzeria.models.AlertMessage;
+import me.matteogiovagnotti.springlamiapizzeria.models.AlertMessage.AlertMessageType;
 import me.matteogiovagnotti.springlamiapizzeria.models.Pizza;
 import me.matteogiovagnotti.springlamiapizzeria.repositories.PizzaRepository;
 import me.matteogiovagnotti.springlamiapizzeria.services.PizzaService;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -83,4 +87,27 @@ public class PizzaController {
         pizzaService.createPizza(formPizza);
         return "redirect:/pizzas";
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+
+        try {
+            boolean success = pizzaService.deleteById(id);
+            if(success){
+
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza with id " + id + " deleted"));
+
+            } else {
+
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR, "Unable to delete pizza with id = "+id));
+
+            }
+        } catch (PizzaNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR, "pizza with id = "+id+ " not found"));
+        }
+
+        return "redirect:/pizzas";
+
+    }
+
 }

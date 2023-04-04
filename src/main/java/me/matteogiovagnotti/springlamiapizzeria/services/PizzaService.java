@@ -1,5 +1,6 @@
 package me.matteogiovagnotti.springlamiapizzeria.services;
 
+import me.matteogiovagnotti.springlamiapizzeria.exceptions.PizzaNotFoundException;
 import me.matteogiovagnotti.springlamiapizzeria.models.Pizza;
 import me.matteogiovagnotti.springlamiapizzeria.repositories.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,19 @@ public class PizzaService {
 
         return pizzaRepository.save(pizzaToPersist);
 
+    }
+
+    public boolean deleteById(Integer id) throws PizzaNotFoundException {
+        pizzaRepository.findById(id).orElseThrow(() -> new PizzaNotFoundException(Integer.toString(id)));
+        try {
+            pizzaRepository.deleteById(id);
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+
+        }
     }
 
 }
