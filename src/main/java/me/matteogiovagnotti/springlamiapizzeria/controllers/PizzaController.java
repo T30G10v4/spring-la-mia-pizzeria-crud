@@ -88,6 +88,33 @@ public class PizzaController {
         return "redirect:/pizzas";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model){
+
+        Pizza pizza = pizzaService.getById(id);
+        model.addAttribute("pizza", pizza);
+        return "/pizzas/edit";
+
+    }
+
+    @PostMapping("/edit/{id}")
+    public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza,
+                         BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors())  return "/pizzas/edit";
+
+        try {
+
+            Pizza updatedPizza = pizzaService.updatePizza(formPizza, id);
+            return "redirect:/pizzas/" + Integer.toString(updatedPizza.getId());
+
+        } catch(PizzaNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id "+id+" not found");
+        }
+
+
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes){
 
